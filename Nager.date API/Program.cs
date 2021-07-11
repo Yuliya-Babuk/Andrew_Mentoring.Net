@@ -1,41 +1,97 @@
 ﻿using Nager.Date;
 using Nager.Date.Model;
 using System;
-using System.Collections.Generic;
 
 namespace Nager.date_API
 {
     class Program
     {
-        static void Main(string[] args)
+        public class Car
         {
-            Console.WriteLine("To query holidays, please, enter a two-letter country code:");
-            string countryCode = Console.ReadLine().ToUpper();
+            private int distance = 0;
+
+            public void Drive(int ds)
+            {
+                distance += ds;
+            }
+
+            public int GetDistane()
+            {
+                return distance;
+            }
+
+            public static string GetName()
+            {
+                return "WW";
+            }
+        }
 
 
-            Console.WriteLine("Enter a year you query holidays for in YYYY format:");
+
+        static void ShowHolidays()
+        {
+            /*
+            var car1 = new Car();
+            car1.Drive(10);
+            car1.Drive(5);
+            var d1 = car1.GetDistane();
+            var car2 = new Car();
+            car2.Drive(1);
+            car2.Drive(5);
+            var d2 = car1.GetDistane();
+            car1.GetName();
+            car2.
+                */
             while (true)
             {
                 try
                 {
-                    int year = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("To query holidays, please, enter a two-letter country code:");
+                    var countryCode = Console.ReadLine().ToUpper();
+
+                    Console.WriteLine("Enter a year you query holidays for in YYYY format:");
+                    //throw new NullReferenceException("message");
+                    var yearString = Console.ReadLine();
+                    if (yearString.Length != 4)
+                    {
+                        throw new FormatException();
+                    }
+
+                    var year = Int32.Parse(yearString);
+
                     var publicHolidays = DateSystem.GetPublicHoliday(year, countryCode);
-                    Console.WriteLine($"\"country\":  {countryCode}\n\"holidays\":\n"); 
+                    Console.WriteLine($"\"country\":  {countryCode}\n\"holidays\":\n");
                     foreach (PublicHoliday publicHoliday in publicHolidays)
                     {
-
                         DateTime date = publicHoliday.Date;
                         string name = publicHoliday.Name;
-                        Dictionary<DateTime, string> dict = new Dictionary<DateTime, string>();
-                        dict.Add(date, name);
                         Console.WriteLine($"\"date\":  {date.ToShortDateString()} \n\"name\":  {name}\n");
                     }
                     return;
+
                 }
-                catch (FormatException)
+                catch (ArgumentException)
+                {
+                    Console.WriteLine("Incorrect format for a country code, please, try again:\n");
+                }
+
+                catch (FormatException e)
                 {
                     Console.WriteLine("Incorrect format for a year, please, try again:\n");
                 }
+            }
+        }
+
+        static void Main(string[] args)
+        {
+
+            try
+            {
+                ShowHolidays();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
 
         }
