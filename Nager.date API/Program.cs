@@ -30,18 +30,6 @@ namespace Nager.date_API
 
         static void ShowHolidays()
         {
-            /*
-            var car1 = new Car();
-            car1.Drive(10);
-            car1.Drive(5);
-            var d1 = car1.GetDistane();
-            var car2 = new Car();
-            car2.Drive(1);
-            car2.Drive(5);
-            var d2 = car1.GetDistane();
-            car1.GetName();
-            car2.
-                */
             while (true)
             {
                 try
